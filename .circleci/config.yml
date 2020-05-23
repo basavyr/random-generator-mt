@@ -44,7 +44,7 @@ jobs:
           command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build .."
       - run:
           name: installs the project
-          command: "make && make install"
+          command: "ls && make && make install"
       - run:
           name: where we at ?
           command: "ls"
