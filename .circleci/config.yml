@@ -15,7 +15,7 @@ jobs:
           command: "apt-get update && apt-get install -y gcc g++"
       - run:
           name: Install CMAKE with commands @ Kitware
-          command: "sudo apt-get update&& sudo apt-get install apt-transport-https ca-certificates gnupg software-properties-common wget"
+          command: "sudo apt-get update&& sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget"
       - run:
           name: obtain a key
           command: "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
