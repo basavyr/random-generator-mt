@@ -36,6 +36,18 @@ jobs:
       - run:
           name: test my docker image
           command: "apt-get update && ls"
+      - run:
+          name: check arch cuz why not
+          command: "uname -a"
+      - run:
+          name: creates the build
+          command: "mkdir build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build .."
+      - run:
+          name:installs the project
+          command: "make && make install"
+      - run:
+          name: where we at ?
+          command: "ls"
 
   job-2-debian:
     docker:
