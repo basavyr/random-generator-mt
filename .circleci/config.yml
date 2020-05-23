@@ -2,30 +2,6 @@
 version: 2.1
 
 jobs:
-  job-1-ubuntu:
-    docker:
-      - image: "ubuntu:latest"
-    steps:
-      - checkout
-      - run:
-          name: Installing SUDO
-          command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
-      - run:
-          name: Installing GCC
-          command: "apt-get update && apt-get install -y gcc g++"
-      - run:
-          name: Install CMAKE with commands @ Kitware
-          command: "sudo apt-get update&& sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget"
-      - run:
-          name: obtain a key
-          command: "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
-      - run:
-          name: add repo to source list
-          command: "sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'"
-      - run:
-          name: finally install cmake
-          command: "sudo apt-get install -y cmake"
-
   # job-1-ubuntu:
   #   docker:
   #     - image: "ubuntu:latest"
@@ -38,11 +14,40 @@ jobs:
   #         name: Installing GCC
   #         command: "apt-get update && apt-get install -y gcc g++"
   #     - run:
-  #         name: Install CMAKE
-  #         command: "apt-get update && sudo apt-get install -y cmake"
+  #         name: Install CMAKE with commands @ Kitware
+  #         command: "sudo apt-get update&& sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget"
   #     - run:
-  #         name: check cmake and gcc
-  #         command: "uname -a && cmake --version && gcc --version"
+  #         name: obtain a key
+  #         command: "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
+  #     - run:
+  #         name: add repo to source list
+  #         command: "sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'"
+  #     - run:
+  #         name: finally install cmake
+  #         command: "sudo apt-get install -y cmake"
+
+  # THIS PIPELINE INSTALLS THE NECESSARY PACKAGE FOR SKIPPING PROMPT IN CMAKE INSTALL
+
+  job-1-ubuntu:
+    docker:
+      - image: "ubuntu:latest"
+    steps:
+      - checkout
+      - run:
+          name: Installing SUDO
+          command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
+      - run:
+          name: Installing GCC
+          command: "apt-get update && apt-get install -y gcc g++"
+      - run:
+          name: Install TZDATA (for skipping promt in cmake installer)
+          command: "export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install tzdata && sudo apt-get install -y libreadline-dev"
+      - run:
+          name: Install CMAKE
+          command: "apt-get update && sudo apt-get install -y cmake"
+      - run:
+          name: check cmake and gcc
+          command: "uname -a && cmake --version && gcc --version"
 
   job-2-debian:
     docker:
