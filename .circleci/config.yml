@@ -41,13 +41,10 @@ jobs:
           command: "uname -a"
       - run:
           name: creates the build
-          command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build .."
+          command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build ..&&make&&make install"
       - run:
-          name: installs the project
-          command: "ls && make && make install"
-      - run:
-          name: where we at ?
-          command: "ls"
+          name: see tarball?
+          command: "ls && cd tarball && ls && cd build &&ls "
 
   job-2-debian:
     docker:
