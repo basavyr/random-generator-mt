@@ -24,6 +24,7 @@ file::Filestream::Filestream(const std::string &file_name, int n_files, const st
     {
         //creates the path file as a string for using in the file checker and file generator part
         auto id_filepath = "../output/" + file_name + std::to_string(file_id) + file_ext;
+        // auto id_filepath = file_name + std::to_string(file_id) + file_ext; //?use the current working directory to create the files.
         out_file.open(id_filepath);
 
         //*################
