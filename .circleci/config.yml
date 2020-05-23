@@ -2,7 +2,25 @@
 version: 2.1
 
 jobs:
-  build:
+  job-1-ubuntu:
+    docker:
+      - image: "ubuntu:latest"
+    steps:
+      - checkout
+      - run:
+          name: Installing SUDO
+          command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
+      - run:
+          name: Installing GCC
+          command: "apt-get update && apt-get install -y gcc g++"
+      - run:
+          name: Install CMAKE
+          command: "apt-get update && sudo apt-get install -y cmake"
+      - run:
+          name: check cmake and gcc
+          command: "uname -a && cmake --version && gcc --version"
+
+  job-2-debian:
     docker:
       - image: "debian:latest"
     steps:
@@ -16,3 +34,12 @@ jobs:
       - run:
           name: Install CMAKE
           command: "apt-get update && sudo apt-get install -y cmake"
+      - run:
+          name: check cmake and gcc
+          command: "uname -a && cmake --version && gcc --version"
+ workflows:
+   version: 2
+   one_and_two: # this is the name of our workflow
+     jobs: # and here we list the jobs we are going to run.
+       - job-2-debian
+       - job-1-ubuntu
