@@ -41,7 +41,7 @@ jobs:
           command: "uname -a"
       - run:
           name: creates the build
-          command: "mkdir build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build .."
+          command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build .."
       - run:
           name: installs the project
           command: "make && make install"
