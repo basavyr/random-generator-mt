@@ -30,24 +30,12 @@ jobs:
 
   job-1-ubuntu:
     docker:
-      - image: "ubuntu:latest"
+      - image: "basavyr/ubuntu_devops:devel"
     steps:
       - checkout
       - run:
-          name: Installing SUDO
-          command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
-      - run:
-          name: Installing GCC
-          command: "apt-get update && apt-get install -y gcc g++"
-      - run:
-          name: Install TZDATA (for skipping promt in cmake installer)
-          command: "export DEBIAN_FRONTEND=noninteractive && sudo apt-get -y install tzdata && sudo apt-get install -y libreadline-dev"
-      - run:
-          name: Install CMAKE
-          command: "apt-get update && sudo apt-get install -y cmake"
-      - run:
-          name: check cmake and gcc
-          command: "uname -a && cmake --version && gcc --version"
+          name: test my docker image
+          command: "apt-get update && ls"
 
   job-2-debian:
     docker:
