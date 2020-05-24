@@ -1,6 +1,11 @@
-#ifndef TWISTER
-#define TWISTER
+#ifndef TWISTER_HH
+#define TWISTER_HH
 
+// #include <cmath>
+#include <iostream>
+#include <memory>
+#include <utility>
+#include <random>
 namespace twister
 {
     class Random
@@ -14,4 +19,5 @@ namespace twister
 
 } // namespace twister
 
-#endif // TWISTER
+#endif // TWISTER_HH
+// 
