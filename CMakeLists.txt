@@ -46,9 +46,13 @@ target_link_libraries(filestream LINK_PUBLIC container)
 target_link_libraries(filestream LINK_PUBLIC twister)
 target_link_libraries(container LINK_PUBLIC twister)
 
-target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/container.hh)
-target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/twister..hh)
-target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/filestream.hh)
+# DEBIAN DOESNT NEED FULL PATH FOR INCLUDE
+target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/container.hh)
+# target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/twister..hh)
+# target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/filestream.hh)
 
 install(TARGETS container LIBRARY DESTINATION lib)
 install(TARGETS twister LIBRARY DESTINATION lib)

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
+#include<memory> //needs memory header for the testing unit (since the source test only imports this header)
 namespace file
 {
     class Filestream
