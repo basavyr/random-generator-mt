@@ -50,8 +50,8 @@ target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/
 target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/twister..hh)
 target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/filestream.hh)
 
-install(TARGETS container)
-install(TARGETS twister)
-install(TARGETS filestream)
+install(TARGETS container DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS twister DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS filestream DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/scripts/clean_files.sh DESTINATION ${CMAKE_INSTALL_PREFIX}/scripts)
