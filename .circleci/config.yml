@@ -20,14 +20,14 @@ jobs:
             echo export DEBIAN_FRONTEND=noninteractive >> $BASH_ENV
             source $BASH_ENV
       - run:
-          name: Installing tzdata (for the cmake install process)
-          command: "sudo apt-get install tzdata"
+          name: "install updates"
+          command: "apt-get -y update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
       - run:
-          name: Installing GCC
-          command: "sudo apt-get update && apt-get install -y gcc g++"
+          name: "install gcc and cmake"
+          command: "sudo apt-get -y update && sudo apt-get install -y tzdata && sudo apt-get install -y gcc g++  && apt-get install -y cmake"
       - run:
-          name: finally install cmake
-          command: "sudo apt-get install -y cmake"
+          name: "makes CXX to the default g++ compiler"
+          command: which g++
       - run:
           name: creates the build
           command: "mkdir -p build && cd build && CC=gcc CXX=g++ cmake -D CMAKE_INSTALL_PREFIX=../tarball/build ..&&make&&make install"
