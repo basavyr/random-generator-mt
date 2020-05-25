@@ -8,5 +8,5 @@ target_link_libraries(file_test LINK_PUBLIC filestream)
 
 
 install(DIRECTORY DESTINATION "output")
-install(TARGETS file_test DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS container_test DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS file_test RUNTIME DESTINATION bin)
+install(TARGETS container_test RUNTIME DESTINATION bin)
