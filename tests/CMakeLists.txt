@@ -8,5 +8,5 @@ target_link_libraries(file_test LINK_PUBLIC filestream)
 
 
 install(DIRECTORY DESTINATION "output")
-install(TARGETS file_test)
-install(TARGETS container_test)
+install(TARGETS file_test RUNTIME DESTINATION bin)
+install(TARGETS container_test RUNTIME DESTINATION bin)

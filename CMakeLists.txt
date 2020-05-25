@@ -15,7 +15,7 @@ project(${project_name})
 # this creates a folder 
 add_custom_target(add_folder ALL COMMAND ${CMAKE_COMMAND} -E make_directory "output")
 
-
+#this alows use to run the executables made after the `make install` command is executed by the user
 set(CMAKE_MACOSX_RPATH 1)
 # the RPATH to be used when installing
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
@@ -46,12 +46,16 @@ target_link_libraries(filestream LINK_PUBLIC container)
 target_link_libraries(filestream LINK_PUBLIC twister)
 target_link_libraries(container LINK_PUBLIC twister)
 
-target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/container.hh)
-target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/twister..hh)
-target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/filestream.hh)
+# DEBIAN DOESNT NEED FULL PATH FOR INCLUDE
+target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+# target_include_directories(container PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/container.hh)
+# target_include_directories(twister PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/twister..hh)
+# target_include_directories(filestream PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/filestream.hh)
 
-install(TARGETS container)
-install(TARGETS twister)
-install(TARGETS filestream)
+install(TARGETS container LIBRARY DESTINATION lib)
+install(TARGETS twister LIBRARY DESTINATION lib)
+install(TARGETS filestream LIBRARY DESTINATION lib)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/scripts/clean_files.sh DESTINATION ${CMAKE_INSTALL_PREFIX}/scripts)

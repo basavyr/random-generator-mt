@@ -4,6 +4,7 @@
 inline void line() { std::cout << '\n'; }
 
 //checks if the file is empty or not
+//? peek function and type traits works like a charm
 bool Empty_File(std::ifstream &file)
 {
     //using the peak function
@@ -12,9 +13,15 @@ bool Empty_File(std::ifstream &file)
 
 static void WriteContainers(std::ofstream &file)
 {
-    std::vector<int> standard_container;  //use just for testing purpose! dimension of container is predefined by the container class itself
-    std::vector<double> custom_container; //use for the normal constructor in the container namespace
-    auto x = std::make_unique<container::Containers>(custom_container, 100000, 1.0, 0.0, 9999.0);
+    std::vector<int> standard_container; //use just for testing purpose! dimension of container is predefined by the container class itself
+    std::vector<int> custom_container;   //use for the normal constructor in the container namespace
+    //! changed to int due to the refactor of random function in the twister
+    // the constants where are used to generate the random containers for file storing
+    const int container_size = 100000;
+    const int left = 0;
+    const int right = container_size - 1;
+    const int norm = 1;
+    auto x = std::make_unique<container::Containers>(custom_container, container_size, norm, left, right);
     x->PrintContainerToFile(file, custom_container);
 }
 
@@ -27,11 +34,11 @@ file::Filestream::Filestream(const std::string &file_name, int n_files, const st
         // auto id_filepath = file_name + std::to_string(file_id) + file_ext; //?use the current working directory to create the files.
         out_file.open(id_filepath);
 
-        //*################
+        //################
         //TODO - This is the place to do the operations (with regards to containers and actual numbers)
         WriteContainers(out_file); //? the actual writing implementation
-        //*################
-        out_file.close(); //!close the file after the
+        //################
+        out_file.close(); //!close the file after the containers are created and emplaced into the right files
 
         std::ifstream input_file(id_filepath);
         // auto checker = static_cast<int>(Empty_File(input_file));

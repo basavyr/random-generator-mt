@@ -2,15 +2,95 @@
 version: 2.1
 
 jobs:
-  build:
+  # job-1-ubuntu:
+  #   docker:
+  #     - image: "ubuntu:latest"
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Installing SUDO
+  #         command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
+  #     - run:
+  #         name: Installing GCC
+  #         command: "apt-get update && apt-get install -y gcc g++"
+  #     - run:
+  #         name: Install CMAKE with commands @ Kitware
+  #         command: "sudo apt-get update&& sudo apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget"
+  #     - run:
+  #         name: obtain a key
+  #         command: "wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null"
+  #     - run:
+  #         name: add repo to source list
+  #         command: "sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ focal main'"
+  #     - run:
+  #         name: finally install cmake
+  #         command: "sudo apt-get install -y cmake"
+
+  # THIS PIPELINE INSTALLS THE NECESSARY PACKAGE FOR SKIPPING PROMPT IN CMAKE INSTALL
+
+  job-1-ubuntu:
     docker:
-      - image: "ubuntu:latest"
+      - image: "basavyr/ubuntu_devops:devel"
+    steps:
+      - checkout
+      - run:
+          name: test my docker image
+          command: "apt-get update && ls"
+      - run:
+          name: check arch cuz why not
+          command: "uname -a"
+      - run:
+          name: creates the build
+          command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build ..&&make&&make install"
+      - run:
+          name: see tarball?
+          command: "ls && cd tarball && ls && cd build &&ls "
+      # - run:
+      #     name: runs  container - test
+      #     command: "cd tarball/build/bin &&./container_test  "
+      - run:
+          name: runs  file - test
+          command: "cd tarball/build/bin &&./file_test  "
+      - run:
+          name: cleaning up the mess...
+          command: "ls tarball/build/output/ &&cd tarball/build/scripts/ && sudo chmod 775 clean_files.sh && ./clean_files.sh"
+      - run:
+          name: check if script cleaned up properly
+          command: "ls tarball/build/output/ && uname -i"
+
+  job-2-debian:
+    docker:
+      - image: "debian:latest"
     steps:
       - checkout
       - run:
           name: Installing SUDO
           command: "apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*"
       - run:
+          name: Installing GCC
+          command: "apt-get update && apt-get install -y gcc g++"
+      - run:
           name: Install CMAKE
           command: "apt-get update && sudo apt-get install -y cmake"
-      
+      - run:
+          name: check cmake and gcc
+          command: "uname -a && cmake --version && gcc --version"
+      - run:
+          name: creates the build project
+          command: "mkdir -p build && cd build && cmake -D CMAKE_INSTALL_PREFIX=../tarball/build ..&&make&&make install"
+      - run:
+          name: runs  file - test
+          command: "cd tarball/build/bin &&./file_test  "
+      - run:
+          name: cleaning up the mess...
+          command: "ls tarball/build/output/ &&cd tarball/build/scripts/ && sudo chmod 775 clean_files.sh && ./clean_files.sh"
+      - run:
+          name: check if script cleaned up properly
+          command: "ls tarball/build/output/ && uname -i"
+
+workflows:
+  version: 2.1
+  one_and_two: # this is the name of our workflow
+    jobs: # and here we list the jobs we are going to run.
+      - job-2-debian
+      - job-1-ubuntu

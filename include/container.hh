@@ -14,17 +14,17 @@ namespace container
     class Containers
     {
     private:
-        size_t size;                    //declare the size of the container to store the random data
-        double norm;                    //?optional: declare a constant value fort normalizing the data set to it
-        double avg;                     //store the computed average from the array
-        double left_limit, right_limit; //chose the interval in which the random data should be generated
+        size_t size;                 //declare the size of the container to store the random data
+        int norm;                    //?optional: declare a constant value fort normalizing the data set to it
+        int left_limit, right_limit; //chose the interval in which the random data should be generated
 
     public:
         //* the default constructor without input parameters: it defaults to an int-type vector
         Containers(std::vector<int> &source);
         //* the constructor with input parameters: it takes the size of the array, norm and random generator limits as parameters.
-        //*type of the array is double in this case
-        Containers(std::vector<double> &source, size_t size, double norm, double left, double right);
+        //*type of the array is int in this case
+        //reason for only working with integers is that the "uniform_int_distribution" is a better choice for working with consistent randomness
+        Containers(std::vector<int> &source, size_t size, int norm, int left, int right);
         ~Containers();
 
     public:

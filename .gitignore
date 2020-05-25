@@ -1,4 +1,6 @@
 *.out
-*.sh
+# *.sh
 *.dat
 build/*
+tarball/*
+*.rng

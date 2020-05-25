@@ -1,11 +1,8 @@
 #include "../include/twister.hh"
 
-#include <iostream>
-
 inline void line() { std::cout << '\n'; }
 
 int main()
 {
-    std::cout << "twister: ok";
-    line();
+    auto x = std::make_unique<twister::Random>(1, 100);
 }
