@@ -15,7 +15,7 @@ project(${project_name})
 # this creates a folder 
 add_custom_target(add_folder ALL COMMAND ${CMAKE_COMMAND} -E make_directory "output")
 
-
+#this alows use to run the executables made after the `make install` command is executed by the user
 set(CMAKE_MACOSX_RPATH 1)
 # the RPATH to be used when installing
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")

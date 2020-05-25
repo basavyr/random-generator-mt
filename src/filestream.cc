@@ -13,9 +13,15 @@ bool Empty_File(std::ifstream &file)
 
 static void WriteContainers(std::ofstream &file)
 {
-    std::vector<int> standard_container;  //use just for testing purpose! dimension of container is predefined by the container class itself
-    std::vector<double> custom_container; //use for the normal constructor in the container namespace
-    auto x = std::make_unique<container::Containers>(custom_container, 100000, 1.0, 0.0, 9999.0);
+    std::vector<int> standard_container; //use just for testing purpose! dimension of container is predefined by the container class itself
+    std::vector<int> custom_container;   //use for the normal constructor in the container namespace
+    //! changed to int due to the refactor of random function in the twister
+    // the constants where are used to generate the random containers for file storing
+    const int container_size = 100000;
+    const int left = 0;
+    const int right = container_size - 1;
+    const int norm = 1;
+    auto x = std::make_unique<container::Containers>(custom_container, container_size, norm, left, right);
     x->PrintContainerToFile(file, custom_container);
 }
 

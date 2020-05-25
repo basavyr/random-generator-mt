@@ -6,18 +6,25 @@
 #include <memory>
 #include <utility>
 #include <random>
+#include <algorithm>
 namespace twister
 {
     class Random
     {
     private:
-        /* data */
+        std::mt19937 mersenne_twister;
+        uint32_t rd_copy;
+        int left, right;
+
     public:
-        Random(/* args */);
+        Random(int, int);
         ~Random();
+
+    public:
+        int get_random();
     };
 
 } // namespace twister
 
-#endif // TWISTER_HH
-// 
+#endif // TWISTER_HH \
+       //

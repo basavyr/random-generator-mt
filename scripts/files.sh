@@ -1,2 +1,2 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -std=c++17 ../src/container.cc ../src/filestream.cc ../tests/file_test.cc -o files.out
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $CPPFLAGS -std=c++17 ../src/container.cc ../src/filestream.cc ../src/twister.cc ../tests/file_test.cc -o files.out
 ./files.out

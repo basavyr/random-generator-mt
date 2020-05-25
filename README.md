@@ -8,7 +8,7 @@ The `scripts/` directory comes with some compilation scripts that run the source
 
 However, the scripts fail to compile on MacOS Catalina if compiled with the `clang/clang++` compiler provided by Xcode. More precisely, if the `twister.sh` script was executed, which tried to compile and run the random number generator part of the project, then the following error would be thrown:
 
-```
+```bash
 /twister.sh        
 In file included from ../src/twister.cc:1:
 In file included from ../src/../include/twister.hh:8:
@@ -35,10 +35,14 @@ The random project contained the `random` and `math` header files, which apparen
 
 **Fix**: in order to fix this issue, an extra flag must be passed to the `clang++` compiler in the command line. Namely, this is the correct command in the script:
 
-```
+```bash
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -std=c++17 ../src/twister.cc ../tests/twister_test.cc -o twister.out
 ```
 
 > `-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk` is just the extra flag passed, so that the correct SDK is pointed out to the clang compiler.
+
+The command above uses a special CPP flag that points the compiler to the proer SDK, so that compilation process can be successfully finished. This is due to a problem with the math and random header.
+
 ___
+
 Solution for this was found on [this](https://github.com/Homebrew/homebrew-core/issues/45061#issuecomment-541010787) issue.

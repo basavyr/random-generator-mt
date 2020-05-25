@@ -3,3 +3,4 @@
 *.dat
 build/*
 tarball/*
+*.rng
