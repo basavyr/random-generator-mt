@@ -110,7 +110,8 @@ jobs:
 
 workflows:
   version: 2.1
-  one_and_two: # this is the name of our workflow
+  docker-workflow: # this is the name of our workflow
     jobs: # and here we list the jobs we are going to run.
       - job-2-debian
       - job-1-ubuntu
+      - job-0-ubuntu
