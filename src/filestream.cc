@@ -27,12 +27,15 @@ static void WriteContainers(std::ofstream &file)
 
 file::Filestream::Filestream(const std::string &file_name, int n_files, const std::string &file_ext)
 {
+    start_time = std::chrono::high_resolution_clock::now();
+    std::cout << "Generation files with random data..." << '\n';
     for (auto file_id = n_files; file_id > 0; file_id--)
     {
         //creates the path file as a string for using in the file checker and file generator part
         auto id_filepath = "../output/" + file_name + std::to_string(file_id) + file_ext;
         // auto id_filepath = file_name + std::to_string(file_id) + file_ext; //?use the current working directory to create the files.
         out_file.open(id_filepath);
+        std::cout << "Creating file " << n_files-file_id << " ..." << '\n';
 
         //################
         //TODO - This is the place to do the operations (with regards to containers and actual numbers)
@@ -71,4 +74,14 @@ file::Filestream::~Filestream()
         std::cout << err_Msg;
     }
     std::cout << ok_msg2;
+    measureTime();
+}
+
+void file::Filestream::measureTime()
+{
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::time_point_cast<std::chrono::microseconds>(start_time).time_since_epoch().count();
+    auto end = std::chrono::time_point_cast<std::chrono::microseconds>(end_time).time_since_epoch().count();
+    auto duration_ms = static_cast<double>((end - start) * 0.000001);
+    std::cout << "File generation took " << duration_ms << " s" << '\n';
 }
